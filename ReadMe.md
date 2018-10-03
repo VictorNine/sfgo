@@ -25,7 +25,7 @@ import (
 )
 
 func main() {
-	sess = sf.NewSession(
+	sess := sf.NewSession(
 		"https://sync.standardnotes.org",
 		"## YOUR EMAIL ##",
 	)
