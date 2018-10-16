@@ -38,14 +38,20 @@ type syncReply struct {
 	CursorToken *string `json:"cursor_token"`
 }
 
-// UpdateItem Update an existing item
+// UpdateItem Put item in que to be synced
 func (sess *Session) UpdateItem(item Item) error {
+	sess.AddedItems = append(sess.AddedItems, item)
+
+	return nil
+}
+
+// EncryptItem Encrypt an item with existing EncItemKey
+func (sess *Session) EncryptItem(item *Item) error {
 	if len(item.EncItemKey) < 1 {
 		return errors.New("Item did not contain EncItemKey")
 	}
 
-	sess.generateContent(&item)
-	sess.AddedItems = append(sess.AddedItems, item)
+	sess.generateContent(item)
 
 	return nil
 }
